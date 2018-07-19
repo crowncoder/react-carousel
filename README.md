@@ -5,17 +5,11 @@ a  carousel component
 2. npm start
 # config
 React.render(
-
   <Slider
-  
     items={[
-    
       {
-      
         src: require('./images/demo1.jpg'),
-        
-        alt: 'images-1',
-        
+        alt: 'images-1',      
       },
       {
         src: require('./images/demo2.jpg'),
