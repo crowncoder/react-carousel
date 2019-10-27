@@ -1,30 +1,45 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 require('./Slider.scss');
 
 import SliderItem from './SliderItem/SliderItem';
 import SliderDots from './SliderDots/SliderDots';
 import SliderArrows from './SliderArrows/SliderArrows';
+import _ from 'lodash';
 
-export default class Slider extends Component {
+export default class Slider extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      items:[],
       nowLocal: 0,
+      repeat:false
     };
   }
-
+  static getDerivedStateFromProps(nextProps,prevState) {
+    if(nextProps.items.length>1){
+      // 将第一张图添加到最后一张以实现无缝切换
+      let tempItems = _.clone(nextProps.items);
+      tempItems.push(tempItems[0]);
+      return {items:tempItems}
+    }
+  }
   // 向前向后多少
   turn(n) {
-    console.log();
     var _n = this.state.nowLocal + n;
     if(_n < 0) {
-      _n = _n + this.props.items.length;
+      _n = _n + this.state.items.length-1;
     }
-    if(_n >= this.props.items.length) {
-      _n = _n - this.props.items.length;
+    if(_n >= this.state.items.length) {
+      _n = _n - this.state.items.length;
     }
+
     this.setState({nowLocal: _n});
+    if(_n===this.props.items.length){
+      setTimeout(()=>{
+        this.setState({nowLocal: 0,repeat:true});
+      },this.props.speed*1000)
+    }
   }
 
   // 开始自动轮播
@@ -46,24 +61,24 @@ export default class Slider extends Component {
   }
 
   render() {
-    let count = this.props.items.length;
+    const count = this.state.items.length;
 
-    let itemNodes = this.props.items.map((item, idx) => {
+    const itemNodes = this.state.items.map((item, idx) => {
       return <SliderItem item={item} count={count} key={'item' + idx} />;
     });
 
-    let arrowsNode = <SliderArrows turn={this.turn.bind(this)}/>;
+    const arrowsNode = <SliderArrows turn={this.turn.bind(this)}/>;
 
-    let dotsNode = <SliderDots turn={this.turn.bind(this)} count={count} nowLocal={this.state.nowLocal} />;
-
+    const dotsNode = <SliderDots turn={this.turn.bind(this)} count={count-1} nowLocal={this.state.nowLocal===3?0:this.state.nowLocal} />;
+    
     return (
       <div
         className="slider"
         onMouseOver={this.props.pause?this.pausePlay.bind(this):null} onMouseOut={this.props.pause?this.goPlay.bind(this):null}>
-          <ul style={{
+          <ul id="carousel" style={{
               left: -100 * this.state.nowLocal + "%",
-              transitionDuration: this.props.speed + "s",
-              width: this.props.items.length * 100 + "%"
+              transitionDuration:(this.state.nowLocal===0 && this.state.repeat? 0 :this.props.speed) + "s",
+              width: this.state.items.length * 100 + "%"
             }}>
               {itemNodes}
           </ul>

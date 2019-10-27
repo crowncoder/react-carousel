@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class SliderDots extends Component {
+export default class SliderDots extends PureComponent {
   constructor(props) {
     super(props);
   }
 
   handleDotClick(i) {
-    var option = i - this.props.nowLocal;
+    const option = i - this.props.nowLocal;
     this.props.turn(option);
   }
 
   render() {
     let dotNodes = [];
-    let { count, nowLocal } = this.props;
+    const { count, nowLocal } = this.props;
     for(let i = 0; i < count; i++) {
       dotNodes[i] = (
         <span
           key={'dot' + i}
-          className={"slider-dot" + (i === this.props.nowLocal?" slider-dot-selected":"")}
+          className={"slider-dot" + (i === nowLocal?" slider-dot-selected":"")}
           onClick={this.handleDotClick.bind(this, i)}>
         </span>
       );

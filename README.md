@@ -1,33 +1,29 @@
 # react-carousel
-a  carousel component 
+A  carousel component for react project
 # run the demo
-1. npm install
-2. npm start
-# config
-React.render(
-
-  <Slider
-  
-    items={[
-    
-      {
-      
+``` shell
+$ npm install
+$ npm start 
+```
+# usage
+``` javascript
+const items = [   
+      {     
         src: require('./images/demo1.jpg'),
         alt: 'images-1',      
-      },
-      
+      },     
       {
         src: require('./images/demo2.jpg'),
         alt: 'images-2',
-      },
-      
+      },     
       {
         src: require('./images/demo3.jpg'),
         alt: 'images-3',
-      },   #图片数组，有几张图片放几张    
-      
-    ]}
-    
+      },   #图片数组，有几张图片放几张         
+    ];  
+React.render(
+  <Slider
+    items={items}
     speed={1.5}       #轮播切换图片的速度
     delay={3}         #自动轮播时候停留的时间
     pause={true}      #鼠标放上图片是否停止自动轮播
@@ -38,3 +34,4 @@ React.render(
   
   document.getElementById("root")
 );
+```
