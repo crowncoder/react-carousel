@@ -1,10 +1,8 @@
 # react-carousel
 A  carousel component for react project
-# run the demo
-``` shell
-$ npm install
-$ npm start 
-```
+# demo
+![slider](https://user-images.githubusercontent.com/48550619/67662019-88188200-f99d-11e9-8075-8f810153b9b2.gif)
+
 # usage
 ``` javascript
 const items = [   

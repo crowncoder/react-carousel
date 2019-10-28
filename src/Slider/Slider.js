@@ -5,7 +5,6 @@ require('./Slider.scss');
 import SliderItem from './SliderItem/SliderItem';
 import SliderDots from './SliderDots/SliderDots';
 import SliderArrows from './SliderArrows/SliderArrows';
-import _ from 'lodash';
 
 export default class Slider extends PureComponent {
   constructor(props) {
@@ -19,9 +18,7 @@ export default class Slider extends PureComponent {
   static getDerivedStateFromProps(nextProps,prevState) {
     if(nextProps.items.length>1){
       // 将第一张图添加到最后一张以实现无缝切换
-      let tempItems = _.clone(nextProps.items);
-      tempItems.push(tempItems[0]);
-      return {items:tempItems}
+      return {items:nextProps.items.concat(nextProps.items[0])}
     }
   }
   // 向前向后多少
@@ -61,6 +58,7 @@ export default class Slider extends PureComponent {
   }
 
   render() {
+    console.log(process.env.NODE_ENV);
     const count = this.state.items.length;
 
     const itemNodes = this.state.items.map((item, idx) => {
