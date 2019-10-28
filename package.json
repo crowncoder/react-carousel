@@ -1,6 +1,6 @@
 {
   "name": "react-easy-carousel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a carousel component",
   "author": "jason gu",
   "main": "build/bundle.js",
